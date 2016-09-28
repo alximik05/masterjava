@@ -2,12 +2,13 @@ package ru.javaops.masterjava.xml.util;
 
 import com.google.common.io.Resources;
 import org.junit.Test;
-import ru.javaops.masterjava.xml.schema.CityType;
-import ru.javaops.masterjava.xml.schema.ObjectFactory;
-import ru.javaops.masterjava.xml.schema.Payload;
+import ru.javaops.masterjava.xml.schema.*;
 
+import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
+import javax.xml.bind.Marshaller;
 import javax.xml.namespace.QName;
+import java.util.List;
 
 /**
  * gkislin
@@ -17,7 +18,7 @@ public class JaxbParserTest {
     private static final JaxbParser JAXB_PARSER = new JaxbParser(ObjectFactory.class);
 
     static {
-        JAXB_PARSER.setSchema(Schemas.ofClasspath("payload.xsd"));
+        JAXB_PARSER.setSchema(Schemas.ofClasspath("projects.xsd"));
     }
 
     @Test
@@ -40,5 +41,37 @@ public class JaxbParserTest {
         String strCity = JAXB_PARSER.marshal(cityElement2);
         JAXB_PARSER.validate(strCity);
         System.out.println(strCity);
+    }
+
+    @Test
+    public void testProjectMarshal() throws Exception {
+        Projects projects = new Projects();
+        projects.setName("test");
+        projects.setDesc("test desc");
+
+        Projects.Groups groups = new Projects.Groups();
+        List<Group> groupList = groups.getGroup();
+
+        Group group1 = new Group();
+        group1.setName("test group");
+        group1.setType(GroupType.CURRENT);
+
+        Group group2 = new Group();
+        group2.setName("test 2 group");
+        group2.setType(GroupType.FINISHED);
+
+        groupList.add(group1);
+        groupList.add(group2);
+
+        projects.setGroups(groups);
+
+        JAXBContext jaxbContext = JAXBContext.newInstance(Projects.class);
+        Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+
+        // output pretty printed
+        jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+
+        jaxbMarshaller.marshal(projects, System.out);
     }
 }

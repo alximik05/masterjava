@@ -50,7 +50,7 @@ public class MatrixBenchmark {
         new Runner(options).run();
     }
 
-//    @Benchmark
+    @Benchmark
     public int[][] singleThreadMultiply() throws Exception {
         return MatrixUtil.singleThreadMultiplyOpt(matrixA, matrixB);
     }

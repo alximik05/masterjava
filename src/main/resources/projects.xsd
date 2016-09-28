@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://javaops.ru"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://javaops.ru"
+           elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+    <xs:element name="Projects">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element name="desc" type="xs:string"/>
+                <xs:element name="Groups">
+                    <xs:complexType>
+                        <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                            <xs:element ref="Group"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="Group">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string" />
+            </xs:sequence>
+            <xs:attribute name="type" type="groupType" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:simpleType name="groupType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="REGISTERING"/>
+            <xs:enumeration value="CURRENT"/>
+            <xs:enumeration value="FINISHED"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

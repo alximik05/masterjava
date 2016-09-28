@@ -1,10 +1,7 @@
 
 package ru.javaops.masterjava.xml.schema;
 
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
-import javax.xml.namespace.QName;
 
 
 /**
@@ -24,7 +21,6 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _City_QNAME = new QName("http://javaops.ru", "City");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: ru.javaops.masterjava.xml.schema
@@ -34,52 +30,27 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Payload }
+     * Create an instance of {@link Projects }
      * 
      */
-    public Payload createPayload() {
-        return new Payload();
+    public Projects createProjects() {
+        return new Projects();
     }
 
     /**
-     * Create an instance of {@link User }
+     * Create an instance of {@link Group }
      * 
      */
-    public User createUser() {
-        return new User();
+    public Group createGroup() {
+        return new Group();
     }
 
     /**
-     * Create an instance of {@link Payload.Cities }
+     * Create an instance of {@link Projects.Groups }
      * 
      */
-    public Payload.Cities createPayloadCities() {
-        return new Payload.Cities();
-    }
-
-    /**
-     * Create an instance of {@link Payload.Users }
-     * 
-     */
-    public Payload.Users createPayloadUsers() {
-        return new Payload.Users();
-    }
-
-    /**
-     * Create an instance of {@link CityType }
-     * 
-     */
-    public CityType createCityType() {
-        return new CityType();
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link CityType }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://javaops.ru", name = "City")
-    public JAXBElement<CityType> createCity(CityType value) {
-        return new JAXBElement<CityType>(_City_QNAME, CityType.class, null, value);
+    public Projects.Groups createProjectsGroups() {
+        return new Projects.Groups();
     }
 
 }
