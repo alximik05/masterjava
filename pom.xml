@@ -14,11 +14,10 @@
     <modules>
         <module>export</module>
         <module>common</module>
-<!--
         <module>web</module>
         <module>mail-service</module>
         <module>mail-api</module>
         <module>test</module>
--->
+
     </modules>
 </project>

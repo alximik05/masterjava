@@ -17,7 +17,7 @@ public class JaxbParserTest {
     private static final JaxbParser JAXB_PARSER = new JaxbParser(ObjectFactory.class);
 
     static {
-        JAXB_PARSER.setSchema(Schemas.ofClasspath("payload.xsd"));
+        JAXB_PARSER.setSchema(Schemas.ofClasspath("ru/javaops/masterjava/payload.xsd"));
     }
 
     @Test

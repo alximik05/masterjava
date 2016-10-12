@@ -12,7 +12,7 @@ import java.io.InputStream;
 public class XsltProcessorTest {
     @Test
     public void transform() throws Exception {
-        try (InputStream xslInputStream = Resources.getResource("cities.xsl").openStream();
+        try (InputStream xslInputStream = Resources.getResource("ru/javaops/masterjava/cities.xsl").openStream();
              InputStream xmlInputStream = Resources.getResource("payload.xml").openStream()) {
 
             XsltProcessor processor = new XsltProcessor(xslInputStream);
