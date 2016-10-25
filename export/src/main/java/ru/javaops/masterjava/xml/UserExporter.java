@@ -12,6 +12,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
 import org.apache.commons.lang3.StringUtils;
+import ru.javaops.masterjava.xml.schema.FlagType;
 import ru.javaops.masterjava.xml.schema.User;
 import ru.javaops.masterjava.xml.util.StaxStreamProcessor;
 
@@ -75,7 +76,7 @@ public class UserExporter extends HttpServlet {
         // maximum size that will be stored in memory
         factory.setSizeThreshold(maxMemSize);
         // Location to save data that is larger than maxMemSize.
-        factory.setRepository(new File("/Users/alximik/Desktop/data/"));
+        factory.setRepository(new File("/Users/stas/Desktop/data/"));
         // Create a new file upload handler
         ServletFileUpload upload = new ServletFileUpload(factory);
         // maximum file size to be uploaded.
@@ -101,16 +102,18 @@ public class UserExporter extends HttpServlet {
                 parser = new StaxStreamProcessor(fileItem.getInputStream());
                 while (parser.doUntil(XMLEvent.START_ELEMENT, "User")) {
                     User user = new User();
-                    user.setValue(parser.getReader().getElementText());
-                    user.setEmail(parser.getAttribute("flag"));
+                    user.setFlag(FlagType.fromValue(parser.getAttribute("flag")));
+                    user.setCity(parser.getAttribute("city"));
                     user.setEmail(parser.getAttribute("email"));
-                    user.setEmail(parser.getAttribute("city"));
+                    user.setValue(parser.getReader().getElementText());
                     insertUserToDb(connection, user);
                 }
 
             } catch (XMLStreamException | IOException e) {
                 System.err.println("Problem with file");
                 e.printStackTrace();
+            } finally {
+                connection.close();
             }
 
         } catch (SQLException e) {
@@ -159,15 +162,15 @@ public class UserExporter extends HttpServlet {
     }
 
     private void insertUserToDb(Connection connection, User user) {
-        String insertTableSQL = "INSERT INTO users(FULL_NAME, FLAG, CITY, EMAIL) VALUES(?,?,?,?,?)";
-        PreparedStatement preparedStatement = null;
+        String insertTableSQL = "INSERT INTO users(FULL_NAME, FLAG, CITY, EMAIL) VALUES(?,?,?,?)";
+        PreparedStatement preparedStatement;
         try {
             preparedStatement = connection.prepareStatement(insertTableSQL);
             preparedStatement.setString(1,user.getValue());
             preparedStatement.setString(2, String.valueOf(user.getFlag()));
             preparedStatement.setString(3, String.valueOf(user.getCity()));
             preparedStatement.setString(4, user.getEmail());
-            preparedStatement.executeLargeUpdate();
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Problem with insert user");
             e.printStackTrace();
