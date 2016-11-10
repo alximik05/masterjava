@@ -31,7 +31,7 @@
         </encoder>
     </appender>
 
-    <logger name="ru.javaops.masterjava" level="info"/>
+    <logger name="ru.javaops.masterjava" level="debug"/>
 
     <root level="warn">
         <appender-ref ref="file"/>

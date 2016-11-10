@@ -7,8 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
+import ru.javaops.UserSaver;
 import ru.javaops.masterjava.common.web.ThymeleafUtil;
-import ru.javaops.masterjava.model.User;
+import ru.javaops.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -43,7 +44,8 @@ public class UploadServlet extends HttpServlet {
                 if (!fileItemStream.isFormField()) {
                     try (InputStream is = fileItemStream.openStream()) {
                         List<User> users = userExport.process(is);
-                        users.forEach(u -> LOG.info(u.toString()));
+                        String response = UserSaver.saveUsers(users);
+                        LOG.info("Response from DB {}", response);
                     }
                     break;
                 }

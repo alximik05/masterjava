@@ -1,4 +1,4 @@
-package ru.javaops.masterjava.model;
+package ru.javaops.model;
 
 /**
  * gkislin
